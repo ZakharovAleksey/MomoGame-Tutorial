@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace Games
+namespace Collision
 {
     /// <summary>
     /// This is the main type for your game.
@@ -12,20 +12,21 @@ namespace Games
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        const int WindowWidth = 800;
+        const int WindowWight = 800;
         const int WindowHeight = 500;
 
-        // Our texture
-        public Texture2D slideCat;
+        Texture2D ball;
+        Rectangle ballRectangle;
+        Vector2 ballVelocity = new Vector2(4, 4);
+
+        Texture2D block;
+        Rectangle blockRectangle;
+        Vector2 blockVelocity = new Vector2(5, 0);
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-
-            // set default window size
-            graphics.PreferredBackBufferWidth = WindowWidth;
-            graphics.PreferredBackBufferHeight = WindowHeight;
         }
 
         /// <summary>
@@ -37,9 +38,12 @@ namespace Games
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            ball = Content.Load<Texture2D>(@"ball\ball");
+            ballRectangle = new Rectangle((WindowWight - ball.Width) / 2, 0, ball.Width, ball.Height);
 
-            // Load our own slide cat texture 
-            slideCat = Content.Load<Texture2D>(@"cat\slide");
+            block = Content.Load<Texture2D>(@"ball\block");
+            blockRectangle = new Rectangle((WindowWight - block.Width) / 2, WindowHeight - block.Height - 50, block.Width, block.Height);
+
             base.Initialize();
         }
 
@@ -51,6 +55,9 @@ namespace Games
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
+
+            // TODO: use this.Content to load your game content here
         }
 
         /// <summary>
@@ -73,6 +80,38 @@ namespace Games
                 Exit();
 
             // TODO: Add your update logic here
+            ballRectangle.X += (int) ballVelocity.X;
+            ballRectangle.Y += (int)ballVelocity.Y;
+
+            // Ball boundary condition
+            if (ballRectangle.X < 0)
+                ballVelocity.X *= -1;
+            if (ballRectangle.X > WindowWight - ball.Width)
+                ballVelocity.X *= -1;
+            if (ballRectangle.Y < 0)
+                ballVelocity.Y *= -1;
+            //if (ballRectangle.Y > WindowHeight - ball.Height)
+            //    ballVelocity.Y *= -1;
+
+            // Block movement
+            if (Keyboard.GetState().IsKeyDown(Keys.Left))
+                blockRectangle.X -= (int)blockVelocity.X;
+            else if (Keyboard.GetState().IsKeyDown(Keys.Right))
+                blockRectangle.X += (int)blockVelocity.X;
+
+            // Block boundary condition
+            if (blockRectangle.X < 0)
+                blockRectangle.X = 0;
+            if (blockRectangle.X > WindowWight - block.Width)
+                blockRectangle.X = WindowWight -block.Width;
+
+            // collision
+            if (ballRectangle.Intersects(blockRectangle))
+                ballVelocity.Y *= -1;
+
+            // Exit to loose
+            if (ballRectangle.Y > WindowHeight - ball.Height)
+                Exit();
 
             base.Update(gameTime);
         }
@@ -86,9 +125,11 @@ namespace Games
             GraphicsDevice.Clear(Color.White);
 
             // TODO: Add your drawing code here
+
             spriteBatch.Begin();
 
-            spriteBatch.Draw(slideCat, new Rectangle(WindowWidth / 2, WindowHeight / 2, slideCat.Width, slideCat.Height), Color.White);
+            spriteBatch.Draw(ball, ballRectangle, Color.White);
+            spriteBatch.Draw(block, blockRectangle, Color.White);
 
             spriteBatch.End();
 

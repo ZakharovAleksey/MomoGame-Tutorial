@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Games", "Games\Games.csproj", "{BEBD469B-7D52-48DE-872E-A8DD96425649}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddImage", "Games\AddImage.csproj", "{BEBD469B-7D52-48DE-872E-A8DD96425649}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoveImave", "MoveImave\MoveImave.csproj", "{165100F8-32A8-46E8-8758-EC4A55653CA1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BallMovement", "BallMovement\BallMovement.csproj", "{E381B716-D223-4725-B7DB-16B443A867BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Collision", "Collision\Collision.csproj", "{AB158BDB-5C84-49ED-B5D6-4ED8577D688C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{BEBD469B-7D52-48DE-872E-A8DD96425649}.Debug|x86.Build.0 = Debug|x86
 		{BEBD469B-7D52-48DE-872E-A8DD96425649}.Release|x86.ActiveCfg = Release|x86
 		{BEBD469B-7D52-48DE-872E-A8DD96425649}.Release|x86.Build.0 = Release|x86
+		{165100F8-32A8-46E8-8758-EC4A55653CA1}.Debug|x86.ActiveCfg = Debug|x86
+		{165100F8-32A8-46E8-8758-EC4A55653CA1}.Debug|x86.Build.0 = Debug|x86
+		{165100F8-32A8-46E8-8758-EC4A55653CA1}.Release|x86.ActiveCfg = Release|x86
+		{165100F8-32A8-46E8-8758-EC4A55653CA1}.Release|x86.Build.0 = Release|x86
+		{E381B716-D223-4725-B7DB-16B443A867BB}.Debug|x86.ActiveCfg = Debug|x86
+		{E381B716-D223-4725-B7DB-16B443A867BB}.Debug|x86.Build.0 = Debug|x86
+		{E381B716-D223-4725-B7DB-16B443A867BB}.Release|x86.ActiveCfg = Release|x86
+		{E381B716-D223-4725-B7DB-16B443A867BB}.Release|x86.Build.0 = Release|x86
+		{AB158BDB-5C84-49ED-B5D6-4ED8577D688C}.Debug|x86.ActiveCfg = Debug|x86
+		{AB158BDB-5C84-49ED-B5D6-4ED8577D688C}.Debug|x86.Build.0 = Debug|x86
+		{AB158BDB-5C84-49ED-B5D6-4ED8577D688C}.Release|x86.ActiveCfg = Release|x86
+		{AB158BDB-5C84-49ED-B5D6-4ED8577D688C}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

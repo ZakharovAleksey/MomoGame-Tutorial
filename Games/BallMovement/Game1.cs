@@ -1,8 +1,15 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace Games
+namespace BallMovement
 {
     /// <summary>
     /// This is the main type for your game.
@@ -12,19 +19,22 @@ namespace Games
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        const int WindowWidth = 800;
+        Texture2D ball;
+        Vector2 position;
+        Vector2 velocity;
+
+        Random rand = new Random();
+
+        const int WindowWight = 800;
         const int WindowHeight = 500;
 
-        // Our texture
-        public Texture2D slideCat;
-
+        
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            // set default window size
-            graphics.PreferredBackBufferWidth = WindowWidth;
+            graphics.PreferredBackBufferWidth = WindowWight;
             graphics.PreferredBackBufferHeight = WindowHeight;
         }
 
@@ -38,8 +48,6 @@ namespace Games
         {
             // TODO: Add your initialization logic here
 
-            // Load our own slide cat texture 
-            slideCat = Content.Load<Texture2D>(@"cat\slide");
             base.Initialize();
         }
 
@@ -51,6 +59,18 @@ namespace Games
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            // TODO: use this.Content to load your game content here
+            ball = Content.Load<Texture2D>(@"ball\ball");
+
+            // Initia; position set to random
+            position.X = rand.Next(0, WindowWight - ball.Width);
+            position.Y = rand.Next(0,WindowHeight - ball.Height);
+
+            // Initial velocity random
+            velocity.X = rand.Next(3, 6);
+            velocity.Y = rand.Next(3, 6);
+            
         }
 
         /// <summary>
@@ -69,10 +89,20 @@ namespace Games
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            // Exit 
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            position += velocity;
             // TODO: Add your update logic here
+            if (position.X < 0)
+                velocity.X *= -1.0f;
+            if (position.X > WindowWight - ball.Width)
+                velocity.X *= -1.0f;
+            if (position.Y < 0)
+                velocity.Y *= -1.0f;
+            if (position.Y > WindowHeight - ball.Height)
+                velocity.Y *= -1.0f;
 
             base.Update(gameTime);
         }
@@ -87,11 +117,8 @@ namespace Games
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-
-            spriteBatch.Draw(slideCat, new Rectangle(WindowWidth / 2, WindowHeight / 2, slideCat.Width, slideCat.Height), Color.White);
-
+            spriteBatch.Draw(ball, position, Color.White);
             spriteBatch.End();
-
             base.Draw(gameTime);
         }
     }

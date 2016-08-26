@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace Games
+namespace MoveImave
 {
     /// <summary>
     /// This is the main type for your game.
@@ -12,18 +12,23 @@ namespace Games
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        // Set Window size
         const int WindowWidth = 800;
-        const int WindowHeight = 500;
+        const int WindowHeight = 600;
 
-        // Our texture
-        public Texture2D slideCat;
+
+        // Texture and it's position
+        Texture2D texture;
+        Vector2 position;
+        Vector2 velocity;
+
+        Vector2 velocityValue = new Vector2(5, 2);
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            // set default window size
             graphics.PreferredBackBufferWidth = WindowWidth;
             graphics.PreferredBackBufferHeight = WindowHeight;
         }
@@ -38,8 +43,6 @@ namespace Games
         {
             // TODO: Add your initialization logic here
 
-            // Load our own slide cat texture 
-            slideCat = Content.Load<Texture2D>(@"cat\slide");
             base.Initialize();
         }
 
@@ -51,6 +54,10 @@ namespace Games
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            // TODO: use this.Content to load your game content here
+            texture = Content.Load<Texture2D>(@"cat\slide");
+            position = new Vector2(50, 200);
         }
 
         /// <summary>
@@ -74,6 +81,25 @@ namespace Games
 
             // TODO: Add your update logic here
 
+            if (Keyboard.GetState().IsKeyDown(Keys.Left))
+                position.X -= velocityValue.X;
+            else if (Keyboard.GetState().IsKeyDown(Keys.Right))
+                position.X += velocityValue.X;
+            else if (Keyboard.GetState().IsKeyDown(Keys.Up))
+                position.Y -= velocityValue.Y;
+            else if (Keyboard.GetState().IsKeyDown(Keys.Down))
+                position.Y += velocityValue.Y;
+
+            // check on boundary condition
+            if (position.X < 0)
+                position.X = 0;
+            if (position.X > WindowWidth - texture.Width)
+                position.X = WindowWidth - texture.Width;
+            if (position.Y < 0)
+                position.Y = 0;
+            if (position.Y > WindowHeight - texture.Height)
+                position.Y = WindowHeight - texture.Height;
+
             base.Update(gameTime);
         }
 
@@ -88,9 +114,9 @@ namespace Games
             // TODO: Add your drawing code here
             spriteBatch.Begin();
 
-            spriteBatch.Draw(slideCat, new Rectangle(WindowWidth / 2, WindowHeight / 2, slideCat.Width, slideCat.Height), Color.White);
-
+            spriteBatch.Draw(texture, position, Color.White);
             spriteBatch.End();
+
 
             base.Draw(gameTime);
         }
