@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddImage", "Games\AddImage.csproj", "{BEBD469B-7D52-48DE-872E-A8DD96425649}"
 EndProject
@@ -11,28 +11,54 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BallMovement", "BallMovemen
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Collision", "Collision\Collision.csproj", "{AB158BDB-5C84-49ED-B5D6-4ED8577D688C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkrollingScreen", "SkrollingScreen\SkrollingScreen.csproj", "{1E281554-440F-4DB4-BDF9-8FBCCFD3866C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Animation", "Animation\Animation.csproj", "{EF3A8450-7DB6-4B1F-BA09-D2DDB4C9400A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
 		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BEBD469B-7D52-48DE-872E-A8DD96425649}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{BEBD469B-7D52-48DE-872E-A8DD96425649}.Debug|x86.ActiveCfg = Debug|x86
 		{BEBD469B-7D52-48DE-872E-A8DD96425649}.Debug|x86.Build.0 = Debug|x86
+		{BEBD469B-7D52-48DE-872E-A8DD96425649}.Release|Any CPU.ActiveCfg = Release|x86
 		{BEBD469B-7D52-48DE-872E-A8DD96425649}.Release|x86.ActiveCfg = Release|x86
 		{BEBD469B-7D52-48DE-872E-A8DD96425649}.Release|x86.Build.0 = Release|x86
+		{165100F8-32A8-46E8-8758-EC4A55653CA1}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{165100F8-32A8-46E8-8758-EC4A55653CA1}.Debug|x86.ActiveCfg = Debug|x86
 		{165100F8-32A8-46E8-8758-EC4A55653CA1}.Debug|x86.Build.0 = Debug|x86
+		{165100F8-32A8-46E8-8758-EC4A55653CA1}.Release|Any CPU.ActiveCfg = Release|x86
 		{165100F8-32A8-46E8-8758-EC4A55653CA1}.Release|x86.ActiveCfg = Release|x86
 		{165100F8-32A8-46E8-8758-EC4A55653CA1}.Release|x86.Build.0 = Release|x86
+		{E381B716-D223-4725-B7DB-16B443A867BB}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{E381B716-D223-4725-B7DB-16B443A867BB}.Debug|x86.ActiveCfg = Debug|x86
 		{E381B716-D223-4725-B7DB-16B443A867BB}.Debug|x86.Build.0 = Debug|x86
+		{E381B716-D223-4725-B7DB-16B443A867BB}.Release|Any CPU.ActiveCfg = Release|x86
 		{E381B716-D223-4725-B7DB-16B443A867BB}.Release|x86.ActiveCfg = Release|x86
 		{E381B716-D223-4725-B7DB-16B443A867BB}.Release|x86.Build.0 = Release|x86
+		{AB158BDB-5C84-49ED-B5D6-4ED8577D688C}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{AB158BDB-5C84-49ED-B5D6-4ED8577D688C}.Debug|x86.ActiveCfg = Debug|x86
 		{AB158BDB-5C84-49ED-B5D6-4ED8577D688C}.Debug|x86.Build.0 = Debug|x86
+		{AB158BDB-5C84-49ED-B5D6-4ED8577D688C}.Release|Any CPU.ActiveCfg = Release|x86
 		{AB158BDB-5C84-49ED-B5D6-4ED8577D688C}.Release|x86.ActiveCfg = Release|x86
 		{AB158BDB-5C84-49ED-B5D6-4ED8577D688C}.Release|x86.Build.0 = Release|x86
+		{1E281554-440F-4DB4-BDF9-8FBCCFD3866C}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{1E281554-440F-4DB4-BDF9-8FBCCFD3866C}.Debug|x86.ActiveCfg = Debug|x86
+		{1E281554-440F-4DB4-BDF9-8FBCCFD3866C}.Debug|x86.Build.0 = Debug|x86
+		{1E281554-440F-4DB4-BDF9-8FBCCFD3866C}.Release|Any CPU.ActiveCfg = Release|x86
+		{1E281554-440F-4DB4-BDF9-8FBCCFD3866C}.Release|x86.ActiveCfg = Release|x86
+		{1E281554-440F-4DB4-BDF9-8FBCCFD3866C}.Release|x86.Build.0 = Release|x86
+		{EF3A8450-7DB6-4B1F-BA09-D2DDB4C9400A}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{EF3A8450-7DB6-4B1F-BA09-D2DDB4C9400A}.Debug|x86.ActiveCfg = Debug|x86
+		{EF3A8450-7DB6-4B1F-BA09-D2DDB4C9400A}.Debug|x86.Build.0 = Debug|x86
+		{EF3A8450-7DB6-4B1F-BA09-D2DDB4C9400A}.Release|Any CPU.ActiveCfg = Release|x86
+		{EF3A8450-7DB6-4B1F-BA09-D2DDB4C9400A}.Release|x86.ActiveCfg = Release|x86
+		{EF3A8450-7DB6-4B1F-BA09-D2DDB4C9400A}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
