@@ -10,49 +10,56 @@ namespace Animation
 {
     class Animation
     {
-        Texture2D texture;
-        Rectangle position;
+        protected Texture2D sprite;
+        protected Rectangle positionRectangle;
 
-        int framesCount;
+        protected int frameCount;
+        protected int currentFrame;
 
-        int millisecondaPerFrame;
-        int currentGameTime = 0;
+        protected int currentExecutedMilliseconds = 0;
+        protected int millisecondsPerFrame;
 
-        int currentFrame = 0;
-
-        public Animation(Texture2D newTexture, Rectangle newRectangle, int newFramesCount, int newMillisecobdsPerFrame)
+        public Animation(Texture2D newSprite, Rectangle newPositionRectangle, int newFrameCount, int newMillisecondsPerFrame)
         {
-            //texture = newTexture;
-            //rectangle = newRectangle;
-            //framesCount = newFramesCount;
-            //millisecondaPerFrame = newMillisecobdsPerFrame;
+            sprite = newSprite;
+            positionRectangle = newPositionRectangle;
+            frameCount = newFrameCount;
+            currentFrame = 0;
 
+            millisecondsPerFrame = newMillisecondsPerFrame;
         }
 
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            //Rectangle destinationRectangle = new Rectangle(rectangle.X, rectangle.Y, texture.Width / framesCount, texture.Height);
-            //Rectangle sourceRectangle = new Rectangle()
-
-            //spriteBatch.Draw(texture, )
-        }
-
+        virtual public void Update(GameTime gametime) { }
+        virtual public void Draw(SpriteBatch spriteBatch) { }
     }
 
-    class AnimationExecution
+    class Warrior : Animation
     {
-        Animation animation;
+        Warrior(Texture2D newSprite, Rectangle newPositionRectangle, int newFrameCount, int newMillisecondsPerFrame) :
+            base(newSprite, newPositionRectangle, newFrameCount, newMillisecondsPerFrame)
+        { }
 
-        AnimationExecution(Animation newAnimation, int newMillisecondsPerFrame)
+        public override void Update(GameTime gametime)
         {
-            animation = newAnimation;
+            currentExecutedMilliseconds = gametime.ElapsedGameTime.Milliseconds;
+            if (currentExecutedMilliseconds >= millisecondsPerFrame)
+            {
+                currentFrame++;
+                currentExecutedMilliseconds = 0;
+                if (currentFrame > frameCount)
+                {
+                    currentFrame = 0;
+                }
+            }
+            base.Update(gametime);
         }
 
-
-        public void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
-            
+            Rectangle positionOnSprite = new Rectangle(sprite.Width * currentFrame, sprite.Height, sprite.Width, sprite.Height);
+            spriteBatch.Draw(sprite, positionRectangle, positionOnSprite, Color.White);
 
+            base.Draw(spriteBatch);
         }
     }
 }
