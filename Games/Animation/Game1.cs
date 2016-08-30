@@ -12,10 +12,22 @@ namespace Animation
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        Texture2D run;
+        Rectangle rectangle;
+
+        Warrior player1;
+
+        const int WindowWidth = 800;
+        const int WindowHeight = 600;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            // Set default window size
+            graphics.PreferredBackBufferWidth = WindowWidth;
+            graphics.PreferredBackBufferHeight = WindowHeight;
         }
 
         /// <summary>
@@ -27,6 +39,10 @@ namespace Animation
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+
+            run = Content.Load<Texture2D>(@"animation\go");
+            rectangle = new Rectangle(300, 300, run.Width / 10, run.Height);
+            player1 = new Warrior(run, rectangle, 10, 50, WindowWidth, WindowHeight);
 
             base.Initialize();
         }
@@ -63,6 +79,7 @@ namespace Animation
                 Exit();
 
             // TODO: Add your update logic here
+            player1.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -73,9 +90,13 @@ namespace Animation
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.White);
 
             // TODO: Add your drawing code here
+            spriteBatch.Begin();
+            player1.Draw(spriteBatch);
+            spriteBatch.End();
+
 
             base.Draw(gameTime);
         }

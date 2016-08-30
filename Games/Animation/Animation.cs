@@ -6,8 +6,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+
 namespace Animation
 {
+    enum AnimationType
+    {
+        STAND,
+        GO,
+        RUN,
+        FIGHT,
+    }
+
     class Animation
     {
         protected Texture2D sprite;
@@ -19,7 +32,10 @@ namespace Animation
         protected int currentExecutedMilliseconds = 0;
         protected int millisecondsPerFrame;
 
-        public Animation(Texture2D newSprite, Rectangle newPositionRectangle, int newFrameCount, int newMillisecondsPerFrame)
+        int WindowWidth;
+        int WindowHeight;
+
+        public Animation(Texture2D newSprite, Rectangle newPositionRectangle, int newFrameCount, int newMillisecondsPerFrame, int newWindowWidth, int newWindowHeight)
         {
             sprite = newSprite;
             positionRectangle = newPositionRectangle;
@@ -27,6 +43,9 @@ namespace Animation
             currentFrame = 0;
 
             millisecondsPerFrame = newMillisecondsPerFrame;
+
+            WindowWidth = newWindowWidth;
+            WindowHeight = newWindowHeight;
         }
 
         virtual public void Update(GameTime gametime) { }
@@ -35,18 +54,37 @@ namespace Animation
 
     class Warrior : Animation
     {
-        Warrior(Texture2D newSprite, Rectangle newPositionRectangle, int newFrameCount, int newMillisecondsPerFrame) :
-            base(newSprite, newPositionRectangle, newFrameCount, newMillisecondsPerFrame)
+
+        #region Constructor
+
+        public Warrior(Texture2D newSprite, Rectangle newPositionRectangle, int newFrameCount, int newMillisecondsPerFrame, int newWindowWidth, int newWindowHeight) :
+            base(newSprite, newPositionRectangle, newFrameCount, newMillisecondsPerFrame, newWindowWidth, newWindowHeight)
         { }
+
+        #endregion
+
+        #region Methods
+
+        void goLeft()
+        {
+            if (Keyboard.GetState().IsKeyDown(Keys.Left))
+            {
+                positionRectangle.X -= 3;
+            } 
+            
+        }
 
         public override void Update(GameTime gametime)
         {
-            currentExecutedMilliseconds = gametime.ElapsedGameTime.Milliseconds;
+            currentExecutedMilliseconds += gametime.ElapsedGameTime.Milliseconds;
+
+            goLeft();
+
             if (currentExecutedMilliseconds >= millisecondsPerFrame)
             {
                 currentFrame++;
                 currentExecutedMilliseconds = 0;
-                if (currentFrame > frameCount)
+                if (currentFrame >= frameCount)
                 {
                     currentFrame = 0;
                 }
@@ -56,10 +94,20 @@ namespace Animation
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            Rectangle positionOnSprite = new Rectangle(sprite.Width * currentFrame, sprite.Height, sprite.Width, sprite.Height);
-            spriteBatch.Draw(sprite, positionRectangle, positionOnSprite, Color.White);
+            // Calculate frame width and height
+            int frameWigth = sprite.Width / frameCount;
+            int frameHeight = sprite.Height;
 
-            base.Draw(spriteBatch);
+            // Calculate position of current frame
+            int currentSpriteRow = currentFrame / frameCount;
+            int currentSpriteColl = currentFrame % frameCount;
+
+            // Rectangle witch determ the current sprite Area in list of sprites
+            Rectangle currentSpriteArea = new Rectangle(currentSpriteColl * frameWigth, currentSpriteRow * frameHeight, frameWigth, frameHeight);
+
+            spriteBatch.Draw(sprite, positionRectangle, currentSpriteArea, Color.White); //, 0.0f, new Vector2(50, 50), SpriteEffects.None, 0.0f);
         }
+
+        #endregion
     }
 }
