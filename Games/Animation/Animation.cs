@@ -65,11 +65,11 @@ namespace Animation
 
         #region Methods
 
-        void goLeft()
+        void goRight()
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.Left))
+            if (Keyboard.GetState().IsKeyDown(Keys.Right))
             {
-                positionRectangle.X -= 3;
+                positionRectangle.X += 3;
             } 
             
         }
@@ -78,7 +78,7 @@ namespace Animation
         {
             currentExecutedMilliseconds += gametime.ElapsedGameTime.Milliseconds;
 
-            goLeft();
+            goRight();
 
             if (currentExecutedMilliseconds >= millisecondsPerFrame)
             {

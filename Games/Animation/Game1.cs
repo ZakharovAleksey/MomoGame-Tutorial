@@ -40,9 +40,9 @@ namespace Animation
         {
             // TODO: Add your initialization logic here
 
-            run = Content.Load<Texture2D>(@"animation\go");
-            rectangle = new Rectangle(300, 300, run.Width / 10, run.Height);
-            player1 = new Warrior(run, rectangle, 10, 50, WindowWidth, WindowHeight);
+            run = Content.Load<Texture2D>(@"black\run");
+            rectangle = new Rectangle(300, 300, run.Width /3, run.Height);
+            player1 = new Warrior(run, rectangle, 3, 150, WindowWidth, WindowHeight);
 
             base.Initialize();
         }
@@ -90,7 +90,7 @@ namespace Animation
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.White);
+            GraphicsDevice.Clear(Color.Black);
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
