@@ -39,6 +39,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Animation.cs" />
+    <Compile Include="Droid.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -51,52 +52,46 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\Content\animation\go.png">
-      <Link>Content\animation\go.png</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\Content\bin\animation\run.xnb">
-      <Link>Content\animation\run.xnb</Link>
+    <Content Include="..\..\Content\bin\droid\idle.xnb">
+      <Link>Content\droid\idle.xnb</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\Content\bin\animation\slide1.xnb">
-      <Link>Content\animation\slide1.xnb</Link>
+    <Content Include="..\..\Content\bin\droid\dead.xnb">
+      <Link>Content\droid\dead.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Content\bin\droid\fly.xnb">
+      <Link>Content\droid\fly.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Content\bin\droid\get_damage.xnb">
+      <Link>Content\droid\get_damage.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Content\bin\droid\go.xnb">
+      <Link>Content\droid\go.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Content\bin\droid\run.xnb">
+      <Link>Content\droid\run.xnb</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\Content\bin\luke\fight.xnb">
-      <Link>Content\luke\fight.xnb</Link>
+    <Content Include="..\..\Content\bin\droid\attack.xnb">
+      <Link>Content\droid\attack.xnb</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\Content\bin\luke\jump.xnb">
-      <Link>Content\luke\jump.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\Content\bin\luke\jump_fight.xnb">
-      <Link>Content\luke\jump_fight.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\Content\bin\luke\run.xnb">
-      <Link>Content\luke\run.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\Content\bin\luke\stay.xnb">
-      <Link>Content\luke\stay.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="..\..\Content\bin\black\run.xnb">
-      <Link>Content\black\run.xnb</Link>
+    <Content Include="..\..\Content\bin\droid\jump_attack.xnb">
+      <Link>Content\droid\jump_attack.xnb</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

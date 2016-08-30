@@ -12,10 +12,7 @@ namespace Animation
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        Texture2D run;
-        Rectangle rectangle;
-
-        Warrior player1;
+        Droid droid;
 
         const int WindowWidth = 800;
         const int WindowHeight = 600;
@@ -40,9 +37,7 @@ namespace Animation
         {
             // TODO: Add your initialization logic here
 
-            run = Content.Load<Texture2D>(@"black\run");
-            rectangle = new Rectangle(300, 300, run.Width /3, run.Height);
-            player1 = new Warrior(run, rectangle, 3, 150, WindowWidth, WindowHeight);
+            droid = new Droid(WindowWidth, WindowHeight);
 
             base.Initialize();
         }
@@ -57,6 +52,8 @@ namespace Animation
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+
+            droid.LoadContent(Content);
         }
 
         /// <summary>
@@ -79,7 +76,8 @@ namespace Animation
                 Exit();
 
             // TODO: Add your update logic here
-            player1.Update(gameTime);
+            
+            droid.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -90,11 +88,12 @@ namespace Animation
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(Color.White);
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-            player1.Draw(spriteBatch);
+
+            droid.Draw(spriteBatch);
             spriteBatch.End();
 
 
