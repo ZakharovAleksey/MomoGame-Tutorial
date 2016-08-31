@@ -56,7 +56,7 @@ namespace Animation
         }
 
 
-        public void PlayAnimation(SpriteBatch spriteBatch, Vector2 currentPosition)
+        public void PlayAnimation(SpriteBatch spriteBatch, Vector2 currentPosition, SpriteEffects currentSpriteEffect)
         {
             // Calculate frame width and height
             int frameWigth = sprite.Width / frameCount;
@@ -69,7 +69,7 @@ namespace Animation
             // Rectangle witch determ the current sprite Area in list of sprites
             Rectangle currentSpriteArea = new Rectangle(currentSpriteColl * frameWigth, currentSpriteRow * frameHeight, frameWigth, frameHeight);
 
-            spriteBatch.Draw(sprite, new Rectangle( (int)currentPosition.X, (int) currentPosition.Y, frameWigth, frameHeight), currentSpriteArea, Color.White); //, 0.0f, new Vector2(50, 50), SpriteEffects.None, 0.0f);
+            spriteBatch.Draw(sprite, new Rectangle( (int)currentPosition.X, (int) currentPosition.Y, frameWigth, frameHeight), currentSpriteArea, Color.White, 0.0f, new Vector2(50, 50), currentSpriteEffect, 0.0f);
         }
     }
 

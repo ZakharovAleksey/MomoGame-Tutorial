@@ -47,12 +47,19 @@ namespace Animation
 
         // jump
         float g = 2.0f;
-        float jump = 80.0f;
+        float jump = 50.0f;
         bool couldJump = true;
 
         // health
         int health = 100;
         bool live = true;
+
+        // rotate sprite
+        bool rotateSprite = false;
+        SpriteEffects currentSpriteEffect = SpriteEffects.None;
+
+        // Current state
+        KeyboardState oldState;
 
         #endregion
 
@@ -90,18 +97,22 @@ namespace Animation
         {
             velocity.X = vx;
             currentAction = (int)ActionType.GO;
+            currentSpriteEffect = SpriteEffects.None;
         }
 
         void goLeftImplementation()
         {
             velocity.X = -vx;
-            currentAction = (int)ActionType.GET_DAMAGE;
+            currentAction = (int)ActionType.GO;
+            currentSpriteEffect = SpriteEffects.FlipHorizontally;
+
         }
 
         void stayImplementation()
         {
             velocity = new Vector2();
             currentAction = (int) ActionType.IDLE;
+            currentSpriteEffect = SpriteEffects.None;
         }
 
         void jumpImplementation()
@@ -110,6 +121,8 @@ namespace Animation
             {
                 position.Y -= jump;
                 couldJump = false;
+                currentAction = (int)ActionType.FLY;
+                currentSpriteEffect = SpriteEffects.None;
             }
         }
 
@@ -119,6 +132,20 @@ namespace Animation
                 currentAction = (int)ActionType.JUMP_ATTACK;
             else
                 currentAction = (int) ActionType.ATTACK;
+            currentSpriteEffect = SpriteEffects.None;
+        }
+
+        void jumpRightImplementation()
+        {
+            velocity.X = vx;
+
+            if (couldJump)
+            {
+                position.Y -= jump;
+                couldJump = false;
+                currentAction = (int)ActionType.FLY;
+                currentSpriteEffect = SpriteEffects.None;
+            }
         }
 
         void bottomBCImplementation()
@@ -144,6 +171,7 @@ namespace Animation
         void deathImplementation()
         {
             currentAction = (int)ActionType.DEAD;
+            currentSpriteEffect = SpriteEffects.None;
             if (position.Y < WindowHeight - actions[currentAction].Y)
                 position.Y += g;
         }
@@ -152,36 +180,53 @@ namespace Animation
 
         public void Update(GameTime gameTime)
         {
+            KeyboardState newState = Keyboard.GetState();
+            //newState = Keyboard.GetState();
+
             if (live)
             {
                 position += velocity;
 
-                if (Keyboard.GetState().IsKeyDown(Keys.Right))
-                    goRightImplementation();
-                else if (Keyboard.GetState().IsKeyDown(Keys.Left))
-                    goLeftImplementation();
-                else if (Keyboard.GetState().IsKeyDown(Keys.Space))
-                    jumpImplementation();
-                else if (Keyboard.GetState().IsKeyDown(Keys.P))
-                    attackImplementation();
-                else
+                // Check on stay position [stay sprite is inital for all positions in witch player stay - attack, or another]
+                if (velocity == new Vector2())
                     stayImplementation();
+                // Then set velocity to zero
+                velocity = new Vector2();
 
+                // Right movement actions [jump right not from the first time: think why]
+                if (oldState.IsKeyDown(Keys.Space) && newState.IsKeyDown(Keys.Right))
+                    jumpRightImplementation();
+                else if (newState.IsKeyDown(Keys.Right))
+                    goRightImplementation();
+                // TODO: Same Left movement actions
+                if (newState.IsKeyDown(Keys.Left))
+                    goLeftImplementation();
+                //if (newState.IsKeyDown(Keys.Space) && oldState.IsKeyDown(Keys.Space))
+                //{
+                //    jumpImplementation();
+                //    jumpImplementation();
+                //}
+                if (newState.IsKeyDown(Keys.Space))
+                    jumpImplementation();
+                if (newState.IsKeyDown(Keys.P))
+                    attackImplementation();
+                
+                // TODO: All Boundary conditions
                 bottomBCImplementation();
 
+                // Check Health
                 checkHealthImplementation();
             }
             else
                 deathImplementation();
 
             actions[currentAction].Update(gameTime);
-            
+            oldState = newState;          
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            actions[currentAction].PlayAnimation(spriteBatch, position);
-
+            actions[currentAction].PlayAnimation(spriteBatch, position, currentSpriteEffect);
         }
 
         #endregion
