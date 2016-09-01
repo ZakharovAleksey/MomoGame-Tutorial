@@ -183,6 +183,8 @@ namespace Animation
             KeyboardState newState = Keyboard.GetState();
             //newState = Keyboard.GetState();
 
+            // IN SHOOTING PROJECT DONE GO AND FIGHT IN THE SAME TIME ALGORITHM
+
             if (live)
             {
                 position += velocity;
@@ -220,7 +222,7 @@ namespace Animation
             else
                 deathImplementation();
 
-            actions[currentAction].Update(gameTime);
+            actions[currentAction].PlayAnimation(gameTime);
             oldState = newState;          
         }
 

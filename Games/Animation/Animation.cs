@@ -40,7 +40,7 @@ namespace Animation
             get { return sprite.Height; }
         }
 
-        public void Update(GameTime gametime)
+        public void PlayAnimation(GameTime gametime)
         {
             currentExecutedMilliseconds += gametime.ElapsedGameTime.Milliseconds;
 
