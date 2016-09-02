@@ -73,11 +73,21 @@ namespace ShootBullet
             }
         }
 
-        public virtual void Draw(SpriteBatch spriteBatch, Vector2 currentPosition)
+        public virtual void Draw(SpriteBatch spriteBatch, Vector2 currentPosition, SpriteEffects currentSpriteEffect = SpriteEffects.None)
         {
+            // obtain position of current frame from sprite series
             Rectangle currentFramePosition = new Rectangle(currentFrame * frameWidth, 0, frameWidth, frameHeight);
 
-            spriteBatch.Draw(texture, new Rectangle( (int) currentPosition.X, (int) currentPosition.Y, frameWidth, frameHeight), currentFramePosition, Color.White);
+            spriteBatch.Draw(
+                texture, 
+                new Rectangle( (int) currentPosition.X, (int) currentPosition.Y, frameWidth, frameHeight), 
+                currentFramePosition, 
+                Color.White, 
+                0.0f,   // rotation
+                new Vector2(0,0),   // origin : lockal coordinate system center (initially left upper corner of sprite rectangle)
+                currentSpriteEffect,    // current sprite effect
+                0.0f    // Layer depth [do not know]
+            );
         }
 
         #endregion

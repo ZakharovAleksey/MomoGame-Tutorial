@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace ShootBullet
+namespace PlayerObjectInteraction
 {
     /// <summary>
     /// This is the main type for your game.
@@ -12,19 +12,10 @@ namespace ShootBullet
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        const int WindowWidth = 800;
-        const int WindowHeight = 600;
-
-        Player droid;
-
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-
-            graphics.PreferredBackBufferWidth = WindowWidth;
-            graphics.PreferredBackBufferHeight = WindowHeight;
-
         }
 
         /// <summary>
@@ -36,7 +27,6 @@ namespace ShootBullet
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            droid = new Player(new Vector2(WindowWidth / 2, WindowHeight - 100), 4, WindowWidth, WindowHeight);
 
             base.Initialize();
         }
@@ -51,7 +41,6 @@ namespace ShootBullet
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            droid.LoadContent(Content);
         }
 
         /// <summary>
@@ -74,7 +63,6 @@ namespace ShootBullet
                 Exit();
 
             // TODO: Add your update logic here
-            droid.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -88,11 +76,6 @@ namespace ShootBullet
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            spriteBatch.Begin();
-
-            droid.Draw(spriteBatch);
-
-            spriteBatch.End();
 
             base.Draw(gameTime);
         }
