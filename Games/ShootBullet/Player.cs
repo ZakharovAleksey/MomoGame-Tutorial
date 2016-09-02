@@ -36,7 +36,10 @@ namespace ShootBullet
 
         // SWORD
         DropObject sword;
-        List<DropObject> swords;
+
+        // swords
+        //DropObject[] swords;
+        //int size = 2;
 
         public Player(Vector2 position)
         {
@@ -45,9 +48,6 @@ namespace ShootBullet
 
             this.position = position;
             velocity = new Vector2();
-            shoots = new List<SingleShoot>();
-            // SWORD
-            swords = new List<DropObject>();
         }
 
         public void LoadContent(ContentManager Content)
@@ -56,10 +56,18 @@ namespace ShootBullet
             actions[(int)ActionType.GO] = new Animation(Content.Load<Texture2D>(@"droid\go"), position, 3, 100);
             actions[(int)ActionType.FIGHT] = new Animation(Content.Load<Texture2D>(@"droid\attack"), position, 3, 100);
 
-            // shoot
-            singleShoot = Content.Load<Texture2D>(@"singleShoot");
+            // sword
             sword = new DropObject(position, 6, 800);
             sword.LoadContent(Content);
+
+            //swords
+            //swords = new DropObject[size];
+            //for (int i = 0; i < size; ++i)
+            //{
+            //    swords[i] = new DropObject(position, 6, 800);
+            //    swords[i].LoadContent(Content);
+            //}
+
         }
 
         void idleImplementation()
@@ -74,41 +82,20 @@ namespace ShootBullet
             currentAction = (int)ActionType.GO;
         }
 
-        // shoot 
-        void shootUpdate(GameTime gameTime)
-        {
-            foreach(SingleShoot shoot in shoots)
-                shoot.Update(gameTime);
-            for(int i = 0; i < shoots.Count; ++i)
-            {
-                if (!shoots[i].IsVisible)
-                {
-                    shoots.RemoveAt(i);
-                    --i;
-                }
-            }
-        }
-
         void fightImplementation(GameTime gameTime)
         {
             currentAction = (int)ActionType.FIGHT;
-            // More if we want to do  shoot
-            //if(shoots.Count < 1)
-            //    shoots.Add(new SingleShoot(singleShoot, position, 800));
 
-            //sword work for one
+            //sword 
             sword.IsVisible = true;
-            sword.Update(gameTime);
-
-            // update sward
-            //sword.IsVisible
         }
         
 
         public void Update(GameTime gameTime)
         {
             position += velocity * gameTime.ElapsedGameTime.Milliseconds;
-            sword.Position += velocity * gameTime.ElapsedGameTime.Milliseconds;
+            //sword
+            sword.Position += velocity; // Чтобы летел с постоянной скоростью не зависящей от скорости чувака
 
             idleImplementation();
 
@@ -119,22 +106,23 @@ namespace ShootBullet
                 forvardMovementImplementation();
             if (state.IsKeyDown(Keys.A))
                 fightImplementation(gameTime);
-            
-            //foreach (SingleShoot shoot in shoots)
-            //    shoot.Update(gameTime);
-            //shootUpdate(gameTime);
-            //sword.Update(gameTime);
+
             actions[currentAction].PlayAnimation(gameTime);
-            sword.Update(gameTime);
+            // sword
+            sword.Update(gameTime, position);
+
+            // swords
         }
 
 
         public void Draw(SpriteBatch spriteBatch)
         {
             actions[currentAction].Draw(spriteBatch, position);
+            //sword
             sword.Draw(spriteBatch);
-            //foreach (SingleShoot shoot in shoots)
-            //    shoot.Draw(spriteBatch);
+
+            // swords
+
         }
     }
 }

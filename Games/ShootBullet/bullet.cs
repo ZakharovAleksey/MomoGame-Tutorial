@@ -54,6 +54,8 @@ namespace ShootBullet
 
     class DropObject
     {
+        #region Fields
+
         Texture2D[] actions;
         Vector2 position;
         Vector2 velocity;
@@ -65,6 +67,9 @@ namespace ShootBullet
 
         int WindowWidth;
 
+        #endregion
+
+        #region Constructor
 
         public DropObject(Vector2 position, int actionsCount, int windowWidth)
         {
@@ -79,6 +84,10 @@ namespace ShootBullet
             WindowWidth = windowWidth;
         }
 
+        #endregion
+
+        #region Properties
+
         public bool IsVisible
         {
             set { isVisible = value; }
@@ -90,6 +99,10 @@ namespace ShootBullet
             set { position = value; }
         }
 
+        #endregion
+
+        #region Methods
+
         public void LoadContent(ContentManager Content)
         {  
             for (int i = 0; i < actionsCount; ++i)
@@ -99,15 +112,26 @@ namespace ShootBullet
             }
         }
 
-
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, Vector2 spritePosition)
         {
             if (isVisible)
             {
+                // while current object in the screen set it to the next animation frame
                 position.X += velocity.X;
                 ++currentAction;
+
+                // If all droping animation complete then repeat it
                 if (currentAction >= actionsCount)
                     currentAction = 0;
+
+                // If current object leaves screen 
+                if(position.X > WindowWidth)
+                {
+                    // Set it invisible beacause we did not drop it yet
+                    isVisible = false;
+                    // Set initial position for droping is equal to current sprite position
+                    position = spritePosition;
+                }
             }
         }
 
@@ -117,27 +141,6 @@ namespace ShootBullet
                 spriteBatch.Draw(actions[currentAction], new Rectangle((int)position.X, (int)position.Y, actions[currentAction].Width, actions[currentAction].Height), Color.White);
         }
 
-        //void DrowSetOfObjects( ref List<DropObject> objects, int objMaxCount)
-        //{
-        //    if (objects.Count < objMaxCount)
-        //    {
-        //        objects.Add(new DropObject(position, 6, WindowWidth));
-        //        objects
-        //    }
-
-        //    foreach (DropObject obj in objects)
-        //        if (position.X >= WindowWidth)
-        //            obj.isVisible = false;
-
-        //    for (int i = 0; i < objects.Count; ++i)
-        //        if (!objects[i].isVisible)
-        //        {
-        //            objects.RemoveAt(i);
-        //            --i;
-        //        }
-                
-        //}   
+        #endregion
     }
-
-    
 }
