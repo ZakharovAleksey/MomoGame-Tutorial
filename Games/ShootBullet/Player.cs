@@ -19,7 +19,8 @@ namespace ShootBullet
         IDLE,
         GO,
         FIGHT,
-        JUMP
+        JUMP,
+        DEAD
     }
 
     class Player
