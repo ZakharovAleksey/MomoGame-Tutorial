@@ -21,7 +21,7 @@ namespace ShootBullet
         GO,
         FIGHT,
         JUMP,
-        DEAD
+        JUMP_FIGHT
     }
 
     class Player
@@ -102,7 +102,7 @@ namespace ShootBullet
 
 #if JUMP
             currentJumpingTime = 0;
-            totalJumpingTime = 200;
+            totalJumpingTime = 400;
             couldJump = true;
 #endif            
 
@@ -122,6 +122,7 @@ namespace ShootBullet
             actions[(int)ActionType.GO] = new Animation(Content.Load<Texture2D>(@"droid\go"), position, 3, 100);
             actions[(int)ActionType.FIGHT] = new Animation(Content.Load<Texture2D>(@"droid\attack"), position, 3, 100);
             actions[(int)ActionType.JUMP] = new Animation(Content.Load<Texture2D>(@"droid\fly"), position, 3, 100);
+            actions[(int)ActionType.JUMP_FIGHT] = new Animation(Content.Load<Texture2D>(@"droid\jump_attack"), position, 3, 100);
 
 #if DROP
             // Load all possible states of droping object
@@ -181,7 +182,8 @@ namespace ShootBullet
         void gravityImplementation(GameTime gameTime)
         {
             if (position.Y < WindowHeight - actions[currentAction].Y)
-                velocity.Y += gravity; // Decrease velocity (it is move physically)
+                // Decrease velocity (it is move physically)
+                velocity.Y += gravity;
 
 #if JUMP
             // If sprite rach the ground
@@ -192,7 +194,12 @@ namespace ShootBullet
 
         void fightImplementation()
         {
-            currentAction = (int)ActionType.FIGHT;
+            // If player in the air set sprite to jump attack
+            if (position.Y < WindowHeight - actions[currentAction].Y)
+                currentAction = (int)ActionType.JUMP_FIGHT;
+            // Otherwise set to origin attack
+            else
+                currentAction = (int)ActionType.FIGHT;
             // Drop direction depends on previous sprite orientation
 #if DROP
             swordSet.Add(states, position, WindowWidth, 100, currentSpriteEffect);

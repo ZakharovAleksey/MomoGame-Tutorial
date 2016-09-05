@@ -36,7 +36,7 @@ namespace ShootBullet
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            droid = new Player(new Vector2(WindowWidth / 2, WindowHeight - 100), 4, WindowWidth, WindowHeight);
+            droid = new Player(new Vector2(WindowWidth / 2, WindowHeight - 100), 5, WindowWidth, WindowHeight);
 
             base.Initialize();
         }
@@ -85,7 +85,7 @@ namespace ShootBullet
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.White);
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
