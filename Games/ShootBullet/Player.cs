@@ -1,4 +1,5 @@
 ﻿#define DROP
+#define JUMP
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -42,12 +43,21 @@ namespace ShootBullet
         float velocityX = 0.15f;
         float velocityY = 0.45f;
 
-        // Jump
+
+        // Graviatational force
         float gravity = 0.1f;
+        #region Jump
 
+#if JUMP
 
-        float jumpMilliseconds; 
+        // Total milliseconds number, witch object could jumping
+        float totalJumpingTime;
+        // Current milliseconds number, witch object could be jumping at this time
+        int currentJumpingTime; 
+        // If could jump - true, false otherwise
         bool couldJump;
+#endif
+        #endregion
 
         #endregion
 
@@ -90,9 +100,11 @@ namespace ShootBullet
             this.position = position;
             velocity = new Vector2();
 
-            // jump
+#if JUMP
+            currentJumpingTime = 0;
+            totalJumpingTime = 200;
             couldJump = true;
-            jumpMilliseconds = 100;
+#endif            
 
             // window 
             currentSpriteEffect = SpriteEffects.None;
@@ -145,22 +157,37 @@ namespace ShootBullet
             currentSpriteEffect = SpriteEffects.FlipHorizontally;
         }
 
+#if JUMP
         void jumpMovementImplementation(GameTime gameTime)
         {
-            // Implementation of jumping in time frame
-            velocity.Y = -velocityY;
-            currentAction = (int)ActionType.JUMP;
-            //couldJump = false;
-        }
+            // If player could jump
+            if (couldJump)
+            {
+                // Update current time object in the air
+                currentJumpingTime += gameTime.ElapsedGameTime.Milliseconds;
+                // If this time bigger then total time it could spent in the air
+                if (currentJumpingTime >= totalJumpingTime)
+                {
+                    couldJump = false;
+                    currentJumpingTime = 0;
+                }
 
+                // Implementation of jumping in velocity frame
+                velocity.Y = - velocityY;
+                currentAction = (int)ActionType.JUMP;
+            }
+        }
+#endif
         void gravityImplementation(GameTime gameTime)
         {
             if (position.Y < WindowHeight - actions[currentAction].Y)
                 velocity.Y += gravity; // Decrease velocity (it is move physically)
 
+#if JUMP
             // If sprite rach the ground
-            if (position.Y == WindowHeight - actions[currentAction].Y)
+            if (position.Y >= WindowHeight - actions[currentAction].Y)
                 couldJump = true;
+#endif
         }
 
         void fightImplementation()
@@ -172,7 +199,7 @@ namespace ShootBullet
 #endif
         }
 
-        #endregion
+#endregion
 
         public void Update(GameTime gameTime)
         {
@@ -189,9 +216,10 @@ namespace ShootBullet
                 forwardMovementImplementation();
             if (state.IsKeyDown(Keys.Left))
                 backwardMovementImplementation();
+#if JUMP
             if (state.IsKeyDown(Keys.Space))
                 jumpMovementImplementation(gameTime);
-
+#endif
             if (state.IsKeyDown(Keys.A))
                 fightImplementation();
 
@@ -218,6 +246,6 @@ namespace ShootBullet
 
         }
 
-        #endregion
+#endregion
     }
 }
