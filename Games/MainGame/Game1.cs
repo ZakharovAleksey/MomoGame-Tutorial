@@ -2,7 +2,13 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace ShootBullet
+/*
+ * Problem: c# the source file is different from when the module was built.
+ * 
+ * In Configuration Manager, my start-up project didn't have "Build" checked
+ */
+
+namespace MainGame
 {
     /// <summary>
     /// This is the main type for your game.
@@ -17,8 +23,10 @@ namespace ShootBullet
 
         Player droid;
 
-        Texture2D pl;
+        //Texture2D pl;
 
+        PlatpormContent platformContent;
+        PlatformList platformList;
 
         public Game1()
         {
@@ -39,7 +47,16 @@ namespace ShootBullet
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            droid = new Player(new Vector2(WindowWidth / 2, WindowHeight - 100), 5, WindowWidth, WindowHeight);
+            //droid = new Player(new Vector2(WindowWidth / 2, WindowHeight - 100), 5, WindowWidth, WindowHeight);
+
+            platformContent = new PlatpormContent();
+
+            platformList = new PlatformList(platformContent, WindowWidth, WindowHeight);
+            
+            platformList.AddPlatform(new Vector2(100, WindowHeight - 100));
+            platformList.AddPlatform(new Vector2(400, WindowHeight - 200));
+
+            droid = new Player(new Vector2(WindowWidth / 2, WindowHeight - 100), 5, platformList, WindowWidth, WindowHeight);
 
             base.Initialize();
         }
@@ -56,7 +73,9 @@ namespace ShootBullet
             // TODO: use this.Content to load your game content here
             droid.LoadContent(Content);
 
-            pl = Content.Load<Texture2D>(@"background\block");
+            platformContent.LoadContent(Content);
+
+
         }
 
         /// <summary>
@@ -97,7 +116,8 @@ namespace ShootBullet
 
             droid.Draw(spriteBatch);
 
-            spriteBatch.Draw(pl, new Rectangle(100, 200, pl.Width, pl.Height), Color.White);
+            platformList.Draw(spriteBatch);
+
             spriteBatch.End();
 
             base.Draw(gameTime);

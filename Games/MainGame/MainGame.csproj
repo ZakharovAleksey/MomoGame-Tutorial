@@ -6,11 +6,11 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{CD683C65-740E-46B0-9817-37314C76BD93}</ProjectGuid>
+    <ProjectGuid>{5A26B30D-A654-46E5-95C6-91D957D8456B}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ShootBullet</RootNamespace>
-    <AssemblyName>ShootBullet</AssemblyName>
+    <RootNamespace>MainGame</RootNamespace>
+    <AssemblyName>MainGame</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MonoGamePlatform>Windows</MonoGamePlatform>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
@@ -41,6 +41,7 @@
     <Compile Include="Animation.cs" />
     <Compile Include="Bullet.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="Platform.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -59,8 +60,24 @@
     <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\..\Content\bin\background\block.xnb">
+      <Link>Content\background\block.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\..\Content\bin\droid\attack.xnb">
       <Link>Content\droid\attack.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Content\bin\droid\dead.xnb">
+      <Link>Content\droid\dead.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Content\bin\droid\fly.xnb">
+      <Link>Content\droid\fly.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Content\bin\droid\get_damage.xnb">
+      <Link>Content\droid\get_damage.xnb</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Content\bin\droid\go.xnb">
@@ -71,14 +88,14 @@
       <Link>Content\droid\idle.xnb</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="..\..\Content\bin\shoot\singleShoot.xnb">
-      <Link>Content\singleShoot.xnb</Link>
+    <Content Include="..\..\Content\bin\droid\jump_attack.xnb">
+      <Link>Content\droid\jump_attack.xnb</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
+    <Content Include="..\..\Content\bin\droid\run.xnb">
+      <Link>Content\droid\run.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\..\Content\bin\shoot\sword\sword1.xnb">
       <Link>Content\sword\sword1.xnb</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -101,34 +118,6 @@
     </Content>
     <Content Include="..\..\Content\bin\shoot\sword\sword6.xnb">
       <Link>Content\sword\sword6.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="..\..\Content\bin\droid\dead.xnb">
-      <Link>Content\droid\dead.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\Content\bin\droid\fly.xnb">
-      <Link>Content\droid\fly.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\Content\bin\droid\get_damage.xnb">
-      <Link>Content\droid\get_damage.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\Content\bin\droid\jump_attack.xnb">
-      <Link>Content\droid\jump_attack.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\Content\bin\droid\run.xnb">
-      <Link>Content\droid\run.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="..\..\Content\bin\background\block.xnb">
-      <Link>Content\background\block.xnb</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
