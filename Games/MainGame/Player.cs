@@ -41,7 +41,7 @@ namespace MainGame
         Vector2 position;
         Vector2 velocity;
 
-        float velocityX = 0.15f;
+        //float velocityX = 0.15f;
         float velocityY = 0.45f;
 
 
@@ -197,7 +197,7 @@ namespace MainGame
 
         void forwardMovementImplementation()
         {
-            velocity.X = velocityX;
+            velocity.X = GameConstants.playerVelocityX;
 
             currentAction = (int)ActionType.GO;
             currentSpriteEffect = SpriteEffects.None;
@@ -205,7 +205,7 @@ namespace MainGame
 
         void backwardMovementImplementation()
         {
-            velocity.X = -velocityX;
+            velocity.X = -GameConstants.playerVelocityX;
 
             currentAction = (int)ActionType.GO;
             currentSpriteEffect = SpriteEffects.FlipHorizontally;

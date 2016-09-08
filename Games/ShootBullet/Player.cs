@@ -144,7 +144,7 @@ namespace ShootBullet
 
         void forwardMovementImplementation()
         {
-            velocity.X = velocityX;
+            velocity.X = 
 
             currentAction = (int)ActionType.GO;
             currentSpriteEffect = SpriteEffects.None;
@@ -218,7 +218,7 @@ namespace ShootBullet
             // Now read and store input user key
             state = Keyboard.GetState();
 
-            // Good DONE GO AND FIGHT IN THE SAME TIME ALGORITHM
+            // Good DONE GO AND FIGHT IN THE SAME TIME ALGORITHM + Когда атакует стоя на платформе анимация будто он летит (может isJumping - ввести? Подумать!!!)
             if (state.IsKeyDown(Keys.Right))
                 forwardMovementImplementation();
             if (state.IsKeyDown(Keys.Left))
