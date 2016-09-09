@@ -11,7 +11,7 @@ namespace MainGame
         #region Player Constants
 
         public const float playerVelocityX = 0.15f;
-        public const float playerVelocityY = 1.15f;
+        public const float playerVelocityY = 0.45f;
 
        
         // Total time in milliseconds during which player could jump 

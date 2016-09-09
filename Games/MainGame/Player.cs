@@ -124,7 +124,7 @@ namespace MainGame
 #endif
         }
 
-        #region Player movement
+        #region Player actions implementation
 
         void idleImplementation()
         {
@@ -167,6 +167,9 @@ namespace MainGame
             }
         }
 #endif
+
+        #region Physics implementation
+
         void gravityImplementation(GameTime gameTime)
         {
             if (playerPosition.Y < GameConstants.WindowHeight - playerActions[currentPlayerAction].Y)
@@ -179,6 +182,21 @@ namespace MainGame
                 couldJump = true;
 #endif
         }
+
+        void boundaryConditionImplementation()
+        {
+            // Check boundaty conditions on left, right, top boundary conditions
+            if (playerPosition.X <= 0)
+                playerPosition.X = 0;
+
+            if (playerPosition.X >= GameConstants.WindowWidth - playerActions[currentPlayerAction].X)
+                playerPosition.X = GameConstants.WindowWidth - playerActions[currentPlayerAction].X;
+
+            if (playerPosition.Y <= 0)
+                playerPosition.Y = 0;
+        }
+
+        #endregion
 
         void fightImplementation()
         {
@@ -195,8 +213,7 @@ namespace MainGame
         }
 
 #if PLATFORM
-
-        void platformInteraction()
+        void playerPlatformInteractionImplementation()
         {
             if (!platformList.Empty())
             {
@@ -209,22 +226,14 @@ namespace MainGame
                         couldJump = true;
                     }
                     if (Rectangle.TouchBottomOf(platformList.At(i).Rectangle))
-                    {
                         couldJump = false;
-                    }
                     if (Rectangle.TouchLeftOf(platformList.At(i).Rectangle))
-                    {
                         playerPosition.X = platformList.At(i).Rectangle.Right;
-                    }
                     if (Rectangle.TouchRightOf(platformList.At(i).Rectangle))
-                    {
                         playerPosition.X = platformList.At(i).Rectangle.Left - playerActions[currentPlayerAction].X;
-                    }
                 }
             }
-
         }
-
 #endif
 
         #endregion
@@ -234,13 +243,11 @@ namespace MainGame
             playerPosition += playerVelocity * gameTime.ElapsedGameTime.Milliseconds;
             playerVelocity = new Vector2();
 
-            // Initial sprite - is IDLE (It takes place then no one other actions could be)
+            // Initial sprite - IDLE (By default initial state of the player)
             idleImplementation();
 
-            // Now read and store input user key
             state = Keyboard.GetState();
 
-            // Good DONE GO AND FIGHT IN THE SAME TIME ALGORITHM
             if (state.IsKeyDown(Keys.Right))
                 forwardMovementImplementation();
             if (state.IsKeyDown(Keys.Left))
@@ -251,16 +258,14 @@ namespace MainGame
 #endif
             if (state.IsKeyDown(Keys.A))
                 fightImplementation();
-
-            // Here will be extern condition (boundary conditions, gravity, )
+            
+            // Physics implementation
             gravityImplementation(gameTime);
 
-            // platform interaction implemantation
+            boundaryConditionImplementation();
 
 #if PLATFORM
-
-            platformInteraction();
-
+            playerPlatformInteractionImplementation();
 #endif
             // Update current animation
             playerActions[currentPlayerAction].PlayAnimation(gameTime);
@@ -278,7 +283,6 @@ namespace MainGame
 #if DROP
             swordSet.Draw(spriteBatch);
 #endif
-
         }
 
         #endregion

@@ -37,8 +37,8 @@ namespace MainGame
 
             platformList = new PlatformList(platformContent);
             
-            platformList.AddPlatform(new Vector2(100, GameConstants.WindowHeight - 350));
-            //platformList.AddPlatform(new Vector2(300, GameConstants.WindowHeight - 200));
+            platformList.AddPlatform(new Vector2(100, GameConstants.WindowHeight - 100));
+            platformList.AddPlatform(new Vector2(400, GameConstants.WindowHeight - 200));
 
             droid = new Player(new Vector2(GameConstants.WindowWidth / 2, GameConstants.WindowHeight - 100), 5, platformList);
 

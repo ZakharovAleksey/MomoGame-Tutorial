@@ -23,7 +23,6 @@ namespace MainGame
 
         #endregion
 
-
         #region Constructors
 
         /// <summary>
@@ -149,48 +148,39 @@ namespace MainGame
         /// </summary>
         /// <param name="gameTime"> current game time </param>
         /// <param name="spritePosition"> store position of sprite witch drop this object </param>
-        public void Update(GameTime gameTime, Vector2 spritePosition)
+        public void Update(GameTime gameTime, Vector2 spritePosition, PlatformList platformList = null)
         {
             if (isVisible)
             {
+                float dropingDirection = 0;
                 // If we drop to the right
                 if (currentSpriteEffect == SpriteEffects.None)
-                {
-                    // while current object in the screen set it to the next animation frame
-                    position.X += GameConstants.droppingObjectVelocityX * gameTime.ElapsedGameTime.Milliseconds;
-                    ++currentState;
-
-                    if (currentState >= states.StatesCount)
-                        currentState = 0;
-
-                    // If current object leaves screen 
-                    if (position.X > GameConstants.WindowWidth)
-                    {
-                        // Set it invisible beacause we did not drop it yet
-                        isVisible = false;
-                        // Set initial position for droping is equal to current sprite position
-                        position = spritePosition;
-                    }
-                }
+                    dropingDirection = 1;
                 // If we drop to the left
                 else if (currentSpriteEffect == SpriteEffects.FlipHorizontally)
+                    dropingDirection = -1;
+
+                //Update current sword position
+                position.X += dropingDirection * GameConstants.droppingObjectVelocityX * gameTime.ElapsedGameTime.Milliseconds;
+
+                ++currentState;
+                if (currentState >= states.StatesCount)
+                    currentState = 0;
+
+                // If current object leaves screen 
+                if (position.X < 0 || position.X > GameConstants.WindowWidth)
                 {
-                    // while current object in the screen set it to the next animation frame
-                    position.X -= GameConstants.droppingObjectVelocityX * gameTime.ElapsedGameTime.Milliseconds;
-                    ++currentState;
-
-                    if (currentState >= states.StatesCount)
-                        currentState = 0;
-
-                    // If current object leaves screen 
-                    if (position.X < 0)
-                    {
-                        // Set it invisible beacause we did not drop it yet
-                        isVisible = false;
-                        // Set initial position for droping is equal to current sprite position
-                        position = spritePosition;
-                    }
+                    isVisible = false;
+                    // Set initial position for droping is equal to current sprite position
+                    position = spritePosition;
                 }
+
+                //if (platformList != null)
+                //{
+                //    for (int currentPlatformID = 0; currentPlatformID < platformList.Count; ++currentPlatformID)
+                //        if (new Rectangle((int)position.X, (int)position.Y, states[currentState].Width, states[currentState].Height).Intersects(platformList.At(currentPlatformID).Rectangle))
+                //            platformList.At(currentPlatformID).VISIBILITY = false;
+                //}
             }
         }
 
