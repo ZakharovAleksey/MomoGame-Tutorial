@@ -196,9 +196,6 @@ namespace MainGame
 
 #if PLATFORM
 
-        /// <summary>
-        /// Implementation of player-platform interaction
-        /// </summary>
         void platformInteraction()
         {
             if (!platformList.Empty())
@@ -218,14 +215,11 @@ namespace MainGame
                     if (Rectangle.TouchLeftOf(platformList.At(i).Rectangle))
                     {
                         playerPosition.X = platformList.At(i).Rectangle.Right;
-                        if(playerPosition.Y > 800)
-                            couldJump = false;
                     }
-                    //if (Rectangle.TouchRightOf(platformList.At(i).Rectangle))
-                    //{
-                    //    playerPosition.X = platformList.At(i).Rectangle.Left;
-                    //    couldJump = false;
-                    //}
+                    if (Rectangle.TouchRightOf(platformList.At(i).Rectangle))
+                    {
+                        playerPosition.X = platformList.At(i).Rectangle.Left - playerActions[currentPlayerAction].X;
+                    }
                 }
             }
 

@@ -11,14 +11,13 @@ namespace MainGame
         #region Player Constants
 
         public const float playerVelocityX = 0.15f;
-        public const float playerVelocityY = 0.85f;
+        public const float playerVelocityY = 1.15f;
 
        
         // Total time in milliseconds during which player could jump 
         public const float totalJumpingTime = 400;
 
         #endregion
-
 
         #region Dropping object parameters
 
@@ -33,7 +32,6 @@ namespace MainGame
         public const float gravityAcceleration = 0.1f;
 
         #endregion
-
 
         #region Window parameters
 
