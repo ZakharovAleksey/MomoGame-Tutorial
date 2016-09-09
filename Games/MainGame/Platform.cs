@@ -16,7 +16,6 @@ namespace MainGame
     {
         #region Fields
 
-        // Platform texture
         Texture2D platformTexture;
 
         #endregion
@@ -59,7 +58,7 @@ namespace MainGame
 
         public void LoadContent(ContentManager Content)
         {
-            platformTexture = Content.Load<Texture2D>(@"background\block");
+            platformTexture = Content.Load<Texture2D>(@"background\platform");
         }
 
         #endregion
@@ -77,20 +76,15 @@ namespace MainGame
         // true if platform in screen
         bool visibility = new bool();   // Set initial value to false
 
-        int WindowWidth;
-        int WindowHeight;
 
         #endregion
 
         #region Constructor
 
-        public Platform(PlatpormContent platformTexture, Vector2 position, int windowWidth, int windowHeight)
+        public Platform(PlatpormContent platformTexture, Vector2 position)
         {
             this.platformTexture = platformTexture;
             this.position = position;
-
-            WindowWidth = windowWidth;
-            WindowHeight = windowHeight;
 
             if (isVisible())
                 visibility = true;
@@ -128,7 +122,7 @@ namespace MainGame
         /// <returns> true if is on the screen, false otherwise </returns>
         public bool isVisible()
         {
-            return ((position.X >= 0 && position.X < WindowWidth) && (position.Y >= 0 && position.Y < WindowHeight));
+            return ((position.X >= 0 && position.X < GameConstants.WindowWidth) && (position.Y >= 0 && position.Y < GameConstants.WindowHeight));
         }
 
         /// <summary>
@@ -152,20 +146,14 @@ namespace MainGame
         PlatpormContent platformContent;
         List<Platform> platformList;
 
-        int WindowWidth;
-        int WindowHeight;
-
         #endregion
 
         #region Constructor
 
-        public PlatformList(PlatpormContent platformContent, int windowWidth, int windowHeight)
+        public PlatformList(PlatpormContent platformContent)
         {
             this.platformContent = platformContent;
             platformList = new List<Platform>();
-
-            WindowWidth = windowWidth;
-            WindowHeight = windowHeight;
         }
 
         #endregion
@@ -196,11 +184,10 @@ namespace MainGame
 
         public void AddPlatform(Vector2 position)
         {
-            Platform currentPlatform = new Platform(platformContent, position, WindowWidth, WindowHeight);
+            Platform currentPlatform = new Platform(platformContent, position);
             platformList.Add(currentPlatform);
 
         }
-
 
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -214,6 +201,44 @@ namespace MainGame
                 platform.DrawPlatform(spriteBatch);
 
         }
+
         #endregion
+    }
+
+    static class RectangleHelper
+    {
+        public static bool TouchTopOf(this Rectangle r1, Rectangle r2)
+        {
+            return (r1.Bottom >= r2.Top - 1 &&
+                    r1.Bottom <= r2.Top + (r2.Height / 2) &&
+                    r1.Right >= r2.Left + r2.Width / 5 &&
+                    r1.Left <= r2.Right - r2.Width / 5);
+        }
+
+        public static bool TouchBottomOf(this Rectangle r1, Rectangle r2)
+        {
+            return (r1.Top <= r2.Bottom + (r2.Height / 5) &&
+                    r1.Top >= r2.Bottom - 1 &&
+                    r1.Right >= r2.Left + (r2.Width / 5) &&
+                    r1.Left <= r2.Right - (r2.Width / 5));
+        }
+
+        public static bool TouchLeftOf(this Rectangle r1, Rectangle r2)
+        {
+            return (r1.Left <= r2.Right &&
+                r1.Top >= r2.Top);
+            //return (r1.Right <= r2.Right &&
+            //        r1.Right >= r2.Right - 5 &&
+            //        r1.Top <= r2.Bottom - (r2.Width / 4) &&
+            //        r1.Bottom >= r2.Top + (r2.Width / 4));
+        }
+
+        public static bool TouchRightOf(this Rectangle r1, Rectangle r2)
+        {
+            return (r1.Left <= r2.Left &&
+                    r1.Left >= r2.Left - 5 &&
+                    r1.Top <= r2.Bottom - (r2.Width / 4) &&
+                    r1.Bottom >= r2.Top + (r2.Width / 4));
+        }
     }
 }

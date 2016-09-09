@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace MainGame
 {
     /// <summary>
-    /// Class witch ONLY load and store all content for droping object
+    /// Class in which only dropping object content stores
     /// </summary>
     class DropObjectStates
     {
@@ -96,13 +96,9 @@ namespace MainGame
 
         // Current position of droping object
         Vector2 position;
-        // Current velocity of droping object [constant value]
-        Vector2 velocity;
 
         // true if droping object is in the screen area
         bool isVisible;
-
-        int WindowWidth;
 
         // Look at spriteEffect inital position if left - drop to left, if right drop to right
         SpriteEffects currentSpriteEffect;
@@ -112,23 +108,20 @@ namespace MainGame
 
         /// <summary>
         /// Constructor with three parametres:
-        /// Initilize position, velocity, current state of droping object
+        /// Initilize position, current state of droping object
         /// </summary>
         /// <param name="states"> DropObjectStates object witch store all textures for droping object animation process </param>
         /// <param name="position"> Initial position of droping object </param>
-        /// <param name="windowWidth"> Window width </param>
-        public DropObject(DropObjectStates states, Vector2 position, SpriteEffects currentSpriteEffect, int windowWidth)
+        public DropObject(DropObjectStates states, Vector2 position, SpriteEffects currentSpriteEffect)
         {
             this.position = position;
             this.states = states;
 
             isVisible = false;
-            velocity = new Vector2(0.25f, 5);
 
             currentState = 0;
 
             this.currentSpriteEffect = currentSpriteEffect;
-            WindowWidth = windowWidth;
         }
 
         #endregion
@@ -164,14 +157,14 @@ namespace MainGame
                 if (currentSpriteEffect == SpriteEffects.None)
                 {
                     // while current object in the screen set it to the next animation frame
-                    position.X += velocity.X * gameTime.ElapsedGameTime.Milliseconds;
+                    position.X += GameConstants.droppingObjectVelocityX * gameTime.ElapsedGameTime.Milliseconds;
                     ++currentState;
 
                     if (currentState >= states.StatesCount)
                         currentState = 0;
 
                     // If current object leaves screen 
-                    if (position.X > WindowWidth)
+                    if (position.X > GameConstants.WindowWidth)
                     {
                         // Set it invisible beacause we did not drop it yet
                         isVisible = false;
@@ -183,7 +176,7 @@ namespace MainGame
                 else if (currentSpriteEffect == SpriteEffects.FlipHorizontally)
                 {
                     // while current object in the screen set it to the next animation frame
-                    position.X -= velocity.X * gameTime.ElapsedGameTime.Milliseconds;
+                    position.X -= GameConstants.droppingObjectVelocityX * gameTime.ElapsedGameTime.Milliseconds;
                     ++currentState;
 
                     if (currentState >= states.StatesCount)
@@ -201,10 +194,6 @@ namespace MainGame
             }
         }
 
-        /// <summary>
-        /// Draw current droping object texture
-        /// </summary>
-        /// <param name="spriteBatch"> current sprite batch </param>
         public void Draw(SpriteBatch spriteBatch)
         {
             if (isVisible)
@@ -260,15 +249,14 @@ namespace MainGame
         /// </summary>
         /// <param name="states"> Stores sprites for drioping animation </param>
         /// <param name="position"> Store current position of sprite, witch droping object </param>
-        /// <param name="windowWidth"> window width </param>
         /// <param name="distanceForNewDrop"> distance from last last droping object </param>
-        public void Add(DropObjectStates states, Vector2 position, int windowWidth, int distanceForNewDrop, SpriteEffects currentSpriteEffect)
+        public void Add(DropObjectStates states, Vector2 position, int distanceForNewDrop, SpriteEffects currentSpriteEffect)
         {
             // If list is null we need to add object in any case
             if (dropObjectList.Count == 0)
             {
                 // Add new object and set it state to visible
-                dropObjectList.Add(new DropObject(states, position, currentSpriteEffect, windowWidth));
+                dropObjectList.Add(new DropObject(states, position, currentSpriteEffect));
                 dropObjectList.First().IsVisible = true;
             }
             else
@@ -277,7 +265,7 @@ namespace MainGame
                 if (Math.Abs(dropObjectList.Last().Position.X - position.X) > distanceForNewDrop)
                 {
                     // Add new object and set it state to visible
-                    dropObjectList.Add(new DropObject(states, position, currentSpriteEffect, windowWidth));
+                    dropObjectList.Add(new DropObject(states, position, currentSpriteEffect));
                     dropObjectList.Last().IsVisible = true;
                 }
 
