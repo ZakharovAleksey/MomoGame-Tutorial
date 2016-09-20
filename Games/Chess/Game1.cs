@@ -12,6 +12,8 @@ namespace Chess
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        Cell testCell;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -20,6 +22,8 @@ namespace Chess
             graphics.PreferredBackBufferWidth = GameConstants.WindowWidth;
             graphics.PreferredBackBufferHeight = GameConstants.WindowHeight;
 
+
+            testCell = new Cell((int)CellType.BLACK, new Rectangle(100, 100, 100, 100));
         }
 
         /// <summary>
@@ -45,6 +49,7 @@ namespace Chess
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            testCell.loadContent(Content);
         }
 
         /// <summary>
@@ -67,6 +72,7 @@ namespace Chess
                 Exit();
 
             // TODO: Add your update logic here
+            testCell.Update();
 
             base.Update(gameTime);
         }
@@ -80,6 +86,12 @@ namespace Chess
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+
+            spriteBatch.Begin();
+
+            testCell.Draw(spriteBatch);
+
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
