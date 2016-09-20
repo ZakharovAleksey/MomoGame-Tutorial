@@ -204,16 +204,16 @@ namespace XMLSerialization
         {
             position += velocity * gameTime.ElapsedGameTime.Milliseconds;
 
-            //if (Keyboard.GetState().IsKeyDown(Keys.Right))
-            //    goRight();
-            //else if (Keyboard.GetState().IsKeyDown(Keys.Left))
-            //    goLeft();
-            //else if (Keyboard.GetState().IsKeyDown(Keys.Up))
-            //    goTop();
-            //else if (Keyboard.GetState().IsKeyDown(Keys.Down))
-            //    goBottom();
-            //else
-            //idleImplamentation();
+            if (Keyboard.GetState().IsKeyDown(Keys.Right))
+                goRight();
+            else if (Keyboard.GetState().IsKeyDown(Keys.Left))
+                goLeft();
+            else if (Keyboard.GetState().IsKeyDown(Keys.Up))
+                goTop();
+            else if (Keyboard.GetState().IsKeyDown(Keys.Down))
+                goBottom();
+            else
+                idleImplamentation();
 
             // TODO: Mouse click implementation            
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)

@@ -10,8 +10,8 @@ namespace XMLSerialization
     static class GameConstants
     {
         // Window Parameters
-        public const int WindowWidth = 500;
-        public const int WindowHeight = 300;
+        public const int WindowWidth = 800;
+        public const int WindowHeight = 500;
 
         // Animation constants
 
@@ -23,7 +23,18 @@ namespace XMLSerialization
 
 
         // Moving epsilon
-        public const float eps = (float)1;
 
+
+        // Enemy
+
+        // Velocity
+        public const float enemyVelocityX = -0.1f;
+        public const float enemyVelocityY = 0.1f;
+        //
+        public const int enemyCount = 4;
+        public const int enemySpawnTime = 200;
+
+
+        public static Random rand = new Random();
     }
 }

@@ -40,6 +40,8 @@
   <ItemGroup>
     <Compile Include="Animation.cs" />
     <Compile Include="ButtonActions.cs" />
+    <Compile Include="Enemy.cs" />
+    <Compile Include="EnemyList.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="GameConstants.cs" />
     <Compile Include="player.cs" />

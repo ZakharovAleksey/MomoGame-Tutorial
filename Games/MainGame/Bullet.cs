@@ -37,7 +37,6 @@ namespace MainGame
 
         #endregion
 
-
         #region Properties
 
         /// <summary>

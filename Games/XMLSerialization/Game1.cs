@@ -13,6 +13,8 @@ namespace XMLSerialization
         SpriteBatch spriteBatch;
 
         Player player;
+        Enemy enemy;
+        EnemyList enemyList;
 
         public Game1()
         {
@@ -23,6 +25,8 @@ namespace XMLSerialization
             graphics.PreferredBackBufferHeight = GameConstants.WindowHeight;
 
             player = new Player(4, new Vector2(100, 100));
+            enemy = new Enemy();
+            enemyList = new EnemyList(enemy);
         }
 
         /// <summary>
@@ -50,6 +54,7 @@ namespace XMLSerialization
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            enemy.LoadContent(Content);
         }
 
         /// <summary>
@@ -72,13 +77,19 @@ namespace XMLSerialization
                 Exit();
 
             // TODO: Add your update logic here
-
-            player.Update(gameTime);
+            
+            // Keys and Mouse actions
             if (Keyboard.GetState().IsKeyDown(Keys.S))
                 ButtonActions.SaveInXML(ref player, "Player");
 
             if (Keyboard.GetState().IsKeyDown(Keys.L))
                 ButtonActions.LoadFromXML(ref player, "Player");
+
+            // Player and enemy position update
+            player.Update(gameTime);
+            enemy.Update(gameTime);
+            enemyList.Update(gameTime);
+
 
             base.Update(gameTime);
         }
@@ -96,6 +107,8 @@ namespace XMLSerialization
             spriteBatch.Begin();
 
             player.Draw(spriteBatch);
+            //enemy.Draw(spriteBatch);
+            enemyList.Draw(spriteBatch);
 
             spriteBatch.End();
 
