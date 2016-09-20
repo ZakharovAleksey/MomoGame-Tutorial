@@ -36,9 +36,15 @@ namespace XMLSerialization
 
         [NonSerialized]
         Vector2 velocity = new Vector2();
-
         [NonSerialized]
         bool isMoveing = false;
+
+
+        // Point to move
+        [NonSerialized]
+        Rectangle destRectangle;
+        Texture2D cube;
+
 
         #endregion
 
@@ -70,11 +76,15 @@ namespace XMLSerialization
             set { currentAnimationID = value; }
         }
 
-
         public bool IsMoveing
         {
             get { return isMoveing; }
             set { isMoveing = value; }
+        }
+
+        Rectangle RectangleOnScreen
+        {
+            get { return new Rectangle((int)position.X, (int)position.Y, animationArray[currentAnimationID].Width, animationArray[currentAnimationID].Height); }
         }
 
         #endregion
@@ -87,9 +97,16 @@ namespace XMLSerialization
             animationArray[(int)AnimationType.GO_LEFT] = new Animation(Content, @"player\goLeft", 4);
             animationArray[(int)AnimationType.GO_TOP] = new Animation(Content, @"player\goUp", 4);
             animationArray[(int)AnimationType.GO_BOTTOM] = new Animation(Content, @"player\goDown", 4);
+
+
+            // Point to move
+            cube = Content.Load<Texture2D>(@"cube");
         }
 
         #region Movement Implementation
+
+
+        #region KeyBoard Actions
 
         void goRight()
         {
@@ -129,6 +146,8 @@ namespace XMLSerialization
             isMoveing = false;
         }
 
+        #endregion
+
         void boundaryConditionImplementation()
         {
             if (position.X <= 0)
@@ -143,13 +162,41 @@ namespace XMLSerialization
 
         }
 
+        #region Mouse Actions Implementation
+
         void OnMouseClick()
         {
+            float weight = 0.1f;
+            destRectangle = new Rectangle(Mouse.GetState().Position.X, Mouse.GetState().Position.Y, cube.Width, cube.Height);
+
+            if (Mouse.GetState().Position.X > position.X)
+                currentAnimationID = (int)AnimationType.GO_RIGHT;
+            else if (Mouse.GetState().Position.X < position.X)
+                currentAnimationID = (int)AnimationType.GO_LEFT;
+
+
             float tan = (Mouse.GetState().Position.Y - position.Y) / (Mouse.GetState().Position.X - position.X);
             float alpha = (float)Math.Atan2((Mouse.GetState().Position.Y - position.Y), (Mouse.GetState().Position.X - position.X));
-            velocity.X = (float) Math.Cos(alpha);
-            velocity.Y = (float) Math.Sin(alpha);
+
+            velocity.X = weight * (float)Math.Cos(alpha);
+            velocity.Y = weight * (float)Math.Sin(alpha);
+
+            isMoveing = true;
         }
+
+        void stop()
+        {
+            if (isMoveing)
+            {
+                if (destRectangle.Intersects(this.RectangleOnScreen))
+                {
+                    velocity.X = 0.0f;
+                    velocity.Y = 0.0f;
+                }
+            }
+        }
+
+        #endregion
 
         #endregion
 
@@ -157,24 +204,23 @@ namespace XMLSerialization
         {
             position += velocity * gameTime.ElapsedGameTime.Milliseconds;
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Right))
-                goRight();
-            else if (Keyboard.GetState().IsKeyDown(Keys.Left))
-                goLeft();
-            else if (Keyboard.GetState().IsKeyDown(Keys.Up))
-                goTop();
-            else if (Keyboard.GetState().IsKeyDown(Keys.Down))
-                goBottom();
-            else
-                idleImplamentation();
+            //if (Keyboard.GetState().IsKeyDown(Keys.Right))
+            //    goRight();
+            //else if (Keyboard.GetState().IsKeyDown(Keys.Left))
+            //    goLeft();
+            //else if (Keyboard.GetState().IsKeyDown(Keys.Up))
+            //    goTop();
+            //else if (Keyboard.GetState().IsKeyDown(Keys.Down))
+            //    goBottom();
+            //else
+            //idleImplamentation();
 
             // TODO: Mouse click implementation            
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
-            {
                 OnMouseClick();
 
-            }
 
+            stop();
             boundaryConditionImplementation();
 
             animationArray[currentAnimationID].UpdateAnimation(gameTime, isMoveing);
@@ -184,6 +230,7 @@ namespace XMLSerialization
         public void Draw(SpriteBatch spriteBatch)
         {
             animationArray[currentAnimationID].Draw(spriteBatch, position);
+            spriteBatch.Draw(cube, destRectangle, Color.White);
         }
 
         #endregion

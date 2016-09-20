@@ -21,5 +21,9 @@ namespace XMLSerialization
         public const float playerVelocityX = 0.2f;
         public const float playerVelocityY = 0.2f;
 
+
+        // Moving epsilon
+        public const float eps = (float)1;
+
     }
 }

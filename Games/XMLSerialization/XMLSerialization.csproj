@@ -59,7 +59,12 @@
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="..\..\Content\bin\ball\cube.xnb">
+      <Link>Content\cube.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="..\..\Content\bin\warcraft\goDown.xnb">
       <Link>Content\player\goDown.xnb</Link>

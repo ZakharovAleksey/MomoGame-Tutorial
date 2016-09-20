@@ -40,7 +40,7 @@ namespace XMLSerialization
 
         #region Properties
 
-        Rectangle SpriteRectangle
+        public Rectangle RectangleInFrames
         {
             get { return new Rectangle(currentSpriteID * Width, 0, Width, Height); }
         }
@@ -82,7 +82,7 @@ namespace XMLSerialization
         public void Draw(SpriteBatch spriteBatch, Vector2 position)
         {
             Rectangle destinationRectangle = new Rectangle((int)position.X, (int)position.Y, Width, Height);
-            spriteBatch.Draw(Texture, destinationRectangle, SpriteRectangle, Color.White, 0.0f, new Vector2(), SpriteEffects.None, 0.0f);
+            spriteBatch.Draw(Texture, destinationRectangle, RectangleInFrames, Color.White, 0.0f, new Vector2(), SpriteEffects.None, 0.0f);
         }
 
 
